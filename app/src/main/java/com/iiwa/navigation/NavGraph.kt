@@ -22,6 +22,7 @@ import com.iiwa.authorization.screens.ForgotPasswordScreen
 import com.iiwa.home.screens.HomeScreen
 import com.iiwa.authorization.screens.LoginScreen
 import com.iiwa.authorization.screens.OtpScreen
+import com.iiwa.authorization.screens.ResetPasswordScreen
 import com.iiwa.authorization.screens.SignupScreen
 import com.iiwa.home.viewmodels.DetailsViewModel
 
@@ -72,8 +73,24 @@ fun NavGraph(navController: NavHostController) {
                 email = email,
                 onNavigateBack = { navController.popBackStack() },
                 onOtpVerified = {
+                    // Navigate to reset password screen after OTP verification
+                    navController.navigate(Screen.ResetPassword.createRoute(email))
+                }
+            )
+        }
+
+        // Reset Password
+        composable(
+            route = Screen.ResetPassword.route,
+            arguments = listOf(navArgument("email") { type = NavType.StringType })
+        ) {
+            val email = it.arguments?.getString("email") ?: ""
+            ResetPasswordScreen(
+                email = email,
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToLogin = {
                     // Navigate to login screen and clear entire navigation graph
-                    // This ensures user starts fresh from login after OTP verification
+                    // This ensures user starts fresh from login after password reset
                     navController.navigate(Screen.Login.route) {
                         popUpTo(0) { inclusive = true }
                     }

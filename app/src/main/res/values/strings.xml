@@ -48,6 +48,15 @@
     <string name="submit">Submit</string>
     <string name="continue_to_otp">Continue to OTP</string>
 
+    <!-- Reset Password Screen -->
+    <string name="reset_password">Reset Password</string>
+    <string name="reset_password_subtitle">Please enter your new password for %1$s</string>
+    <string name="new_password">New Password</string>
+    <string name="enter_new_password">Enter your new password</string>
+    <string name="confirm_new_password">Confirm your new password</string>
+    <string name="password_reset_successful">Password Reset Successful</string>
+    <string name="password_reset_success_message">Your password has been reset successfully. You can now sign in with your new password.</string>
+
     <!-- OTP Screen -->
     <string name="otp_title">Enter OTP</string>
     <string name="otp_subtitle">We\'ve sent a 4-digit code to your email</string>

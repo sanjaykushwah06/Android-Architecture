@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kapt) apply false
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.firebase.crashlytics) apply false
+    id("io.gitlab.arturbosch.detekt") version "1.23.8" // or latest
 }
 // Ensure latest kotlinx-metadata-jvm is used across all modules
 allprojects {
@@ -16,4 +17,9 @@ allprojects {
             force("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.9.0")
         }
     }
+}
+detekt {
+    config.setFrom("$rootDir/config/detekt.yml")
+    buildUponDefaultConfig = true
+    allRules = false
 }

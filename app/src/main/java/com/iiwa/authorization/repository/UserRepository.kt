@@ -212,6 +212,38 @@ class UserRepository @Inject constructor(
             is Result.Loading -> result
         }
     }
+
+    /**
+     * Reset password with new password
+     * Uses RemoteData for centralized network handling
+     */
+    suspend fun resetPassword(email: String, newPassword: String): Result<ForgotPasswordResponse> {
+        // For now, return mock success since DummyJSON doesn't have reset password endpoint
+        // TODO: Replace with actual API call when backend is ready
+        return Result.Success(
+            ForgotPasswordResponse(
+                message = "Password reset successfully",
+                success = true
+            )
+        )
+
+        // When your backend has the reset password endpoint, use this:
+        /*
+        val request = ResetPasswordRequest(email = email, newPassword = newPassword)
+        return when (val result = remoteData.executeCall { authApi.resetPassword(request) }) {
+            is Result.Success -> {
+                // Validate response
+                if (result.data.success) {
+                    result
+                } else {
+                    Result.Error(result.data.message)
+                }
+            }
+            is Result.Error -> result
+            is Result.Loading -> result
+        }
+        */
+    }
 }
 
 /**

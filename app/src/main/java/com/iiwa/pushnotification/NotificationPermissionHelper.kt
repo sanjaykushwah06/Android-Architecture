@@ -23,14 +23,19 @@ class NotificationPermissionHelper @Inject constructor(
 ) {
     
     companion object {
-        const val NOTIFICATION_PERMISSION = Manifest.permission.POST_NOTIFICATIONS
+        @Suppress("InlinedApi")
+        val NOTIFICATION_PERMISSION = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Manifest.permission.POST_NOTIFICATIONS
+        } else {
+            null
+        }
     }
     
     /**
      * Check if notification permission is granted
      */
     fun isNotificationPermissionGranted(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && NOTIFICATION_PERMISSION != null) {
             ContextCompat.checkSelfPermission(
                 context,
                 NOTIFICATION_PERMISSION
@@ -45,7 +50,7 @@ class NotificationPermissionHelper @Inject constructor(
      * Check if we should show rationale for notification permission
      */
     fun shouldShowNotificationPermissionRationale(activity: ComponentActivity): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && NOTIFICATION_PERMISSION != null) {
             activity.shouldShowRequestPermissionRationale(NOTIFICATION_PERMISSION)
         } else {
             false

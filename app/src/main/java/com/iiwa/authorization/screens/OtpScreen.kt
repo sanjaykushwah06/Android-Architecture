@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
@@ -54,7 +53,6 @@ import com.iiwa.authorization.viewmodels.OtpUiState
 import com.iiwa.authorization.viewmodels.OtpViewModel
 import com.iiwa.components.NetworkAlertDialog
 import com.iiwa.ui.theme.Dimens
-import kotlinx.coroutines.delay
 
 @Composable
 fun OtpScreen(
@@ -71,11 +69,10 @@ fun OtpScreen(
         viewModel.setEmail(email)
     }
 
-    // Navigate to login screen after successful OTP verification
+    // Navigate to reset password screen after successful OTP verification
     LaunchedEffect(uiState.isOtpVerified) {
         if (uiState.isOtpVerified) {
-            // Show success message briefly before navigating to login
-            delay(2000)
+            // Navigate immediately to reset password screen
             onOtpVerified()
         }
     }
@@ -115,18 +112,13 @@ fun OtpScreen(
 
         Spacer(modifier = Modifier.height(Dimens._32dp))
 
-        if (uiState.isOtpVerified) {
-            // Success State
-            OtpSuccessContent()
-        } else {
-            // OTP Input State
-            OtpInputContent(
-                uiState = uiState,
-                onOtpChange = { viewModel.updateOtp(it) },
-                onVerifyOtp = { viewModel.verifyOtp() },
-                onResendOtp = { viewModel.resendOtp() }
-            )
-        }
+        // OTP Input State
+        OtpInputContent(
+            uiState = uiState,
+            onOtpChange = { viewModel.updateOtp(it) },
+            onVerifyOtp = { viewModel.verifyOtp() },
+            onResendOtp = { viewModel.resendOtp() }
+        )
     }
 
     // Network Alert Dialog
@@ -326,43 +318,5 @@ private fun OtpInputContent(
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun OtpSuccessContent() {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        // Success Icon
-        Icon(
-            Icons.Default.CheckCircle,
-            contentDescription = "OTP Verified",
-            modifier = Modifier.size(Dimens._80dp),
-            tint = MaterialTheme.colorScheme.primary
-        )
-
-        Spacer(modifier = Modifier.height(Dimens._24dp))
-
-        // Success Title
-        Text(
-            text = stringResource(R.string.otp_verification_successful),
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary,
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.height(Dimens._16dp))
-
-        // Success Message
-        Text(
-            text = "OTP verified successfully! You will be redirected to login.",
-            fontSize = 16.sp,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center,
-            lineHeight = 24.sp
-        )
     }
 }

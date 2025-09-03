@@ -1,0 +1,43 @@
+# Pre-commit hooks configuration
+# Install with: pip install pre-commit
+# Then run: pre-commit install
+
+repos:
+  - repo: local
+    hooks:
+      - id: detekt
+        name: Detekt
+        entry: ./gradlew detekt
+        language: system
+        types: [kotlin]
+        pass_filenames: false
+        always_run: true
+        
+      - id: lint
+        name: Android Lint
+        entry: ./gradlew app:lintDebug
+        language: system
+        types: [kotlin]
+        pass_filenames: false
+        always_run: true
+        
+      - id: gradle-check
+        name: Gradle Check
+        entry: ./gradlew check
+        language: system
+        types: [kotlin]
+        pass_filenames: false
+        always_run: true
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: '\.md$'
+      - id: end-of-file-fixer
+        exclude: '\.md$'
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+      - id: check-case-conflict

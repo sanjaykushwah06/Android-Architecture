@@ -31,6 +31,7 @@ mockito = "5.12.0"
 mockitoKotlin = "5.4.0"
 turbine = "1.1.0"
 roomCompiler = "2.7.2"
+detekt = "1.23.8"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -85,4 +86,5 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 google-services = { id = "com.google.gms.google-services", version = "4.4.2" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "2.9.9" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 

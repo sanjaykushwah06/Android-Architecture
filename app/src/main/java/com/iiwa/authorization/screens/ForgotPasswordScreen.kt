@@ -35,6 +35,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -81,26 +82,24 @@ fun ForgotPasswordScreen(
                     modifier = Modifier.size(Dimens._24dp)
                 )
             }
-            
+
             Spacer(modifier = Modifier.weight(1f))
         }
 
         Spacer(modifier = Modifier.height(Dimens._32dp))
 
-        if (uiState.isEmailSent) {
-                    // Success State
-        EmailSentContent(
-            onResendEmail = { viewModel.resendEmail() },
-            onBackToLogin = onNavigateBack,
-            onContinueToOtp = { onNavigateToOtp(uiState.email) }
+        // Form State
+        ForgotPasswordForm(
+            uiState = uiState,
+            onEmailChange = { viewModel.updateEmail(it) },
+            onSubmit = { viewModel.submitForgotPassword() }
         )
-        } else {
-            // Form State
-            ForgotPasswordForm(
-                uiState = uiState,
-                onEmailChange = { viewModel.updateEmail(it) },
-                onSubmit = { viewModel.submitForgotPassword() }
-            )
+    }
+
+    // Navigate to OTP screen when email is sent successfully
+    LaunchedEffect(uiState.isEmailSent) {
+        if (uiState.isEmailSent) {
+            onNavigateToOtp(uiState.email)
         }
     }
 
@@ -165,11 +164,11 @@ private fun ForgotPasswordForm(
             value = uiState.email,
             onValueChange = onEmailChange,
             label = { Text(stringResource(R.string.email)) },
-            leadingIcon = { 
+            leadingIcon = {
                 Icon(
-                    Icons.Default.Email, 
+                    Icons.Default.Email,
                     contentDescription = stringResource(R.string.email)
-                ) 
+                )
             },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
@@ -227,101 +226,6 @@ private fun ForgotPasswordForm(
                     fontWeight = FontWeight.Medium
                 )
             }
-        }
-    }
-}
-
-@Composable
-private fun EmailSentContent(
-    onResendEmail: () -> Unit,
-    onBackToLogin: () -> Unit,
-    onContinueToOtp: () -> Unit
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        // Success Icon
-        Icon(
-            Icons.Default.CheckCircle,
-            contentDescription = "Email Sent",
-            modifier = Modifier.size(Dimens._80dp),
-            tint = MaterialTheme.colorScheme.primary
-        )
-
-        Spacer(modifier = Modifier.height(Dimens._24dp))
-
-        // Success Title
-        Text(
-            text = stringResource(R.string.email_sent_title),
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary,
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.height(Dimens._16dp))
-
-        // Success Message
-        Text(
-            text = stringResource(R.string.email_sent_message),
-            fontSize = 16.sp,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center,
-            lineHeight = 24.sp
-        )
-
-        Spacer(modifier = Modifier.height(Dimens._48dp))
-
-        // Resend Email Button
-        OutlinedButton(
-            onClick = onResendEmail,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(Dimens._56dp)
-        ) {
-            Icon(
-                Icons.Default.Email,
-                contentDescription = "Resend Email",
-                modifier = Modifier.size(Dimens._20dp)
-            )
-            Spacer(modifier = Modifier.width(Dimens._8dp))
-            Text(
-                text = stringResource(R.string.resend_email),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium
-            )
-        }
-
-        Spacer(modifier = Modifier.height(Dimens._16dp))
-
-        // Continue to OTP Button
-        Button(
-            onClick = onContinueToOtp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(Dimens._56dp)
-        ) {
-            Text(
-                text = stringResource(R.string.continue_to_otp),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium
-            )
-        }
-
-        Spacer(modifier = Modifier.height(Dimens._16dp))
-
-        // Back to Login Button
-        TextButton(
-            onClick = onBackToLogin,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = stringResource(R.string.back_to_login),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.primary
-            )
         }
     }
 }

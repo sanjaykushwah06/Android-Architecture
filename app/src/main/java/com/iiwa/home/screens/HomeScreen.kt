@@ -7,6 +7,7 @@
 package com.iiwa.home.screens
 
 import android.Manifest
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -145,7 +146,10 @@ fun HomeScreen(
         showDialog = uiState.shouldShowNotificationPermissionDialog,
         onDismiss = { viewModel.dismissNotificationPermissionDialog() },
         onConfirm = {
-            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                @Suppress("InlinedApi")
+                notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
         }
     )
 }

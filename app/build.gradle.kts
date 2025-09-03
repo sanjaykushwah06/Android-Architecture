@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kapt)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -40,12 +41,12 @@ android {
             versionNameSuffix = "-debug"
         }
     }
-    
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    
+
     kotlinOptions {
         jvmTarget = "11"
     }
@@ -60,7 +61,7 @@ android {
             buildConfigField("boolean", "ENABLE_LOGGING", "true")
             buildConfigField("boolean", "ENABLE_CRASH_REPORTING", "false")
         }
-        
+
         create("staging") {
             dimension = "environment"
             applicationIdSuffix = ".staging"
@@ -70,7 +71,7 @@ android {
             buildConfigField("boolean", "ENABLE_LOGGING", "true")
             buildConfigField("boolean", "ENABLE_CRASH_REPORTING", "true")
         }
-        
+
         create("production") {
             dimension = "environment"
             buildConfigField("String", "BASE_URL", "\"https://api.production.com/\"")
@@ -96,6 +97,13 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    lint {
+        lintConfig =file("$rootDir/config/lint.xml")
+        abortOnError = true
+        xmlReport = true
+        htmlReport = true
+    }
 }
 
 dependencies {
@@ -118,17 +126,17 @@ dependencies {
     implementation(libs.okhttp.logging)
     implementation(libs.material)
     implementation(libs.biometric)
-    
+
     // Firebase dependencies
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.messaging)
-    
+
     // Room Database
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
-    
+
     // Unit Testing
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
@@ -136,15 +144,31 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.turbine)
-    
+
     // Android Testing
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.compose.ui.test.junit4)
     androidTestImplementation(libs.kotlinx.coroutines.test)
-    
+
     // Debug
     debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.compose.ui.test.manifest)
+}
+
+// Detekt configuration
+detekt {
+    buildUponDefaultConfig = true
+    allRules = false
+    config.setFrom("$rootDir/config/detekt.yml")
+    baseline = file("$rootDir/config/detekt-baseline.xml")
+    
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+        txt.required.set(true)
+        sarif.required.set(false)
+        md.required.set(false)
+    }
 }
