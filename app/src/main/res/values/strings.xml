@@ -1,0 +1,185 @@
+<resources>
+    <string name="app_name">IwaaApp</string>
+
+    <!-- Error Messages -->
+    <string name="no_internet">No internet connection available</string>
+    <string name="network_error">Network error occurred</string>
+    <string name="invalid_password">Invalid password</string>
+    <string name="invalid_username">Invalid username</string>
+    <string name="invalid_username_and_password">Invalid username and password</string>
+    <string name="search_error">Search error occurred</string>
+    <string name="file_not_found_error">File not found</string>
+    <string name="unknown_error">Unknown error occurred</string>
+
+    <!-- Authentication -->
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="email">Email</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="login_failed">Login failed. Please try again.</string>
+    <string name="sign_in_to_continue">Sign in to continue</string>
+    <string name="create_account">Create Account</string>
+    <string name="sign_up_to_get_started">Sign up to get started</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="sign_in_with_biometric">Sign in with Biometric</string>
+    <string name="dont_have_account">Don\'t have an account? </string>
+    <string name="already_have_account">Already have an account? </string>
+    <string name="hide_password">Hide password</string>
+    <string name="show_password">Show password</string>
+
+    <!-- Network Dialog -->
+    <string name="no_internet_title">No Internet Connection</string>
+    <string name="no_internet_message">Please check your internet connection and try again.</string>
+    <string name="no_internet_subtitle">Make sure you\'re connected to WiFi or mobile data.</string>
+    <string name="try_again">Try Again</string>
+    <string name="open_settings">Open Settings</string>
+    <string name="network_check_failed">Network check failed</string>
+    <string name="checking_network">Checking network...</string>
+
+    <!-- Forgot Password Screen -->
+    <string name="forgot_password_title">Forgot Password?</string>
+    <string name="forgot_password_subtitle">Enter your email address and we\'ll send you a link to reset your password.</string>
+    <string name="email_sent_title">Email Sent!</string>
+    <string name="email_sent_message">We\'ve sent a password reset link to your email address. Please check your inbox and follow the instructions.</string>
+    <string name="resend_email">Resend Email</string>
+    <string name="back_to_login">Back to Login</string>
+    <string name="submit">Submit</string>
+    <string name="continue_to_otp">Continue to OTP</string>
+
+    <!-- OTP Screen -->
+    <string name="otp_title">Enter OTP</string>
+    <string name="otp_subtitle">We\'ve sent a 4-digit code to your email</string>
+    <string name="otp_placeholder">Enter 4-digit code</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="resend_otp_in">Resend OTP in %1$ds</string>
+    <string name="otp_verification_successful">OTP verification successful!</string>
+    <string name="otp_verification_failed">OTP verification failed</string>
+    <string name="invalid_otp">Please enter a valid 4-digit OTP</string>
+    <string name="invalid_otp_test">Invalid OTP. Please enter 1234.</string>
+    <string name="otp_expired">OTP has expired. Please request a new one.</string>
+
+    <!-- Biometric Authentication -->
+    <string name="auth_biometric_title">Biometric Authentication</string>
+    <string name="auth_fingerprint_title">Fingerprint Authentication</string>
+    <string name="auth_face_title">Face Authentication</string>
+    <string name="auth_biometric_subtitle">Use your biometric to sign in</string>
+    <string name="auth_fingerprint_subtitle">Touch the fingerprint sensor</string>
+    <string name="auth_face_subtitle">Look at the camera</string>
+    <string name="auth_face_fingerprint_subtitle">Use face or fingerprint to sign in</string>
+
+    <!-- Biometric Setup Dialog -->
+    <string name="biometric_setup_title">Enable Biometric Authentication</string>
+    <string name="biometric_setup_fingerprint_title">Enable Fingerprint Authentication</string>
+    <string name="biometric_setup_face_title">Enable Face Authentication</string>
+    <string name="biometric_setup_message">Do you want to enable biometric authentication for Iwaa app?</string>
+    <string name="biometric_setup_fingerprint_message">Do you want to enable fingerprint authentication for Iwaa app?</string>
+    <string name="biometric_setup_face_message">Do you want to enable face authentication for Iwaa app?</string>
+    <string name="biometric_setup_description">Use your biometric for faster and more secure sign-in.</string>
+    <string name="biometric_setup_fingerprint_description">Use your fingerprint for faster and more secure sign-in.</string>
+    <string name="biometric_setup_face_description">Use face recognition for faster and more secure sign-in.</string>
+    <string name="enable">Enable</string>
+    <string name="not_now">Not Now</string>
+
+    <!-- Biometric Choice Dialog -->
+    <string name="biometric_choice_title">Choose Authentication Method</string>
+    <string name="biometric_choice_subtitle">Select your preferred biometric authentication method</string>
+    <string name="biometric_face_option_title">Face Recognition</string>
+    <string name="biometric_face_option_description">Look at the camera to authenticate</string>
+    <string name="biometric_fingerprint_option_title">Fingerprint</string>
+    <string name="biometric_fingerprint_option_description">Touch the fingerprint sensor</string>
+
+    <!-- Biometric Bottom Sheet -->
+    <string name="biometric_touch_sensor">Touch sensor</string>
+    <string name="biometric_look_at_camera">Look at the camera</string>
+    <string name="biometric_look_or_touch">Look at camera or touch sensor</string>
+    <string name="biometric_scanning">Scanning...</string>
+    <string name="biometric_scanning_face">Scanning face...</string>
+    <string name="biometric_scanning_fingerprint">Scanning fingerprint...</string>
+    <string name="biometric_auth_successful">Authentication Successful</string>
+    <string name="biometric_auth_failed">Authentication Failed</string>
+    <string name="biometric_place_finger">Place your finger on the sensor</string>
+    <string name="biometric_position_face">Position your face in front of the camera</string>
+
+    <!-- Biometric Error Messages -->
+    <string name="biometric_not_available">Biometric authentication is not available on this device</string>
+    <string name="biometric_auth_canceled">Authentication canceled</string>
+    <string name="biometric_too_many_attempts">Too many attempts. Please try again later.</string>
+    <string name="biometric_no_biometrics">No fingerprints enrolled on this device</string>
+    <string name="biometric_not_recognized">Fingerprint not recognized. Try again.</string>
+    <string name="biometric_face_not_recognized">Face not recognized. Try again.</string>
+    <string name="biometric_try_again">Authentication failed. Try again.</string>
+    <string name="biometric_error_setup">Biometric authentication setup failed</string>
+    <string name="biometric_activity_required">Activity must be FragmentActivity for biometric authentication</string>
+    <string name="biometric_face_not_supported">Face authentication is not available on this device. Please use fingerprint instead.</string>
+    <string name="biometric_switching_to_fingerprint">Switching to fingerprint authentication...</string>
+    <string name="biometric_face_camera_opening">Opening camera for face authentication...</string>
+
+    <!-- Generic Dialog Actions -->
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="retry">Retry</string>
+    <string name="dismiss">Dismiss</string>
+
+    <!-- Push Notifications -->
+    <string name="notification_channel_name">General Notifications</string>
+    <string name="notification_channel_description">General app notifications</string>
+    <string name="notification_default_title">Iwaa App</string>
+    <string name="notification_default_message">You have a new notification</string>
+
+    <!-- Home Screen -->
+    <string name="home_title">Home</string>
+    <string name="home_welcome">Welcome to Iwaa</string>
+
+    <!-- Common Messages -->
+    <string name="loading">Loading...</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="success">Success</string>
+    <string name="error">Error</string>
+    <string name="warning">Warning</string>
+    <string name="info">Information</string>
+
+    <!-- Validation Messages -->
+    <string name="email_required">Email is required</string>
+    <string name="email_invalid_format">Invalid email format</string>
+    <string name="password_required">Password is required</string>
+    <string name="password_min_length">Password must be at least 6 characters</string>
+    <string name="password_uppercase_required">Password must contain at least one uppercase letter</string>
+    <string name="password_number_required">Password must contain at least one number</string>
+    <string name="password_special_char_required">Password must contain at least one special character</string>
+    <string name="confirm_password_required">Please confirm your password</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
+    <string name="otp_required">OTP is required</string>
+    <string name="otp_must_be_4_digits">OTP must be 4 digits</string>
+    <string name="otp_must_be_numbers">OTP must contain only numbers</string>
+
+    <!-- Network Error Messages -->
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="request_timeout">Request timeout</string>
+    <string name="network_error_generic">Network error</string>
+    <string name="connection_failed">Connection failed</string>
+
+    <!-- Network Status -->
+    <string name="network_status_prefix">Network Status: %1$s</string>
+    <string name="is_connected_prefix">Is Connected: %1$s</string>
+    <string name="network_info_prefix">Network Info: %1$s</string>
+
+    <!-- Signup Messages -->
+    <string name="please_fill_all_fields">Please fill all fields</string>
+    <string name="signup_failed">Signup failed: %1$s</string>
+
+    <!-- Biometric Types -->
+    <string name="biometric_type_auto">auto</string>
+    <string name="biometric_type_fingerprint">fingerprint</string>
+    <string name="biometric_type_face">face</string>
+
+    <!-- General Topic -->
+    <string name="topic_general">general</string>
+
+    <!-- Biometric Authentication Failed -->
+    <string name="biometric_auth_failed_generic">Biometric authentication failed</string>
+</resources>

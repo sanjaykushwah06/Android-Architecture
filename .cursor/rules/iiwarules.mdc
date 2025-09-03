@@ -1,0 +1,94 @@
+---
+description: IIWA App Development Rules and Best Practices
+globs: ["**/*.kt", "**/*.xml", "**/*.gradle*"]
+alwaysApply: true
+---
+
+# IIWA App Development Rules
+
+## 1. String Resources Management
+- **ALWAYS** create strings in `strings.xml` file - NEVER hardcode strings in code
+- Use descriptive string resource names with proper prefixes
+- Examples:
+  ```xml
+  <!-- Good -->
+  <string name="auth_fingerprint_title">Fingerprint Authentication</string>
+  <string name="auth_face_title">Face Authentication</string>
+  <string name="dialog_cancel">Cancel</string>
+  
+  <!-- Bad - hardcoded in code -->
+  Text("Fingerprint Authentication")
+  ```
+
+## 2. Generic and Reusable Code
+- **ALWAYS** create generic, reusable components instead of specific implementations
+- Follow the pattern of `GenericAlertDialog` - create base components that can be customized
+- Use composition over duplication
+- Examples:
+  - Use `GenericAlertDialog` with different configurations instead of creating separate dialog components
+  - Create generic helpers and utilities that can be reused across features
+  - Implement parameterized composables that adapt to different use cases
+
+## 3. Preserve Previous Implementation
+- **NEVER** remove or break previous working implementations when adding new features
+- Always extend and enhance existing functionality rather than replacing it
+- Use feature flags or configuration parameters to enable new functionality
+- Comment out code with clear explanations rather than deleting if temporary
+- Examples:
+  ```kotlin
+  // Good - Adding new feature while preserving old
+  fun authenticate(type: String = "auto") {
+      when (type) {
+          "face" -> authenticateWithFace()
+          "fingerprint" -> authenticateWithFingerprint()
+          else -> authenticateWithAuto() // Previous implementation preserved
+      }
+  }
+  
+  // Bad - Removing previous implementation
+  // fun authenticate() { ... } // ❌ Don't delete this
+  ```
+
+## 4. Code Formatting and Style
+- **ALWAYS** follow proper indentation (4 spaces for Kotlin, 2 spaces for XML)
+- **NO** extra white spaces at the end of lines
+- **NO** unnecessary blank lines between code blocks
+- **CONSISTENT** spacing around operators and brackets
+- Examples:
+  ```kotlin
+  // Good - Proper formatting
+  fun authenticateUser(
+      username: String,
+      password: String
+  ): Boolean {
+      if (username.isNotEmpty() && password.isNotEmpty()) {
+          return performAuthentication(username, password)
+      }
+      return false
+  }
+  
+  // Bad - Poor formatting
+  fun authenticateUser(username:String,password:String):Boolean{
+      if(username.isNotEmpty()&&password.isNotEmpty()){
+  
+          return performAuthentication(username,password)
+      }
+  
+      return false
+  }
+  ```
+
+## 5. Additional Best Practices
+- Always add header comments with author, date, and purpose
+- Use dependency injection (Hilt) for all dependencies
+- Follow MVVM architecture pattern
+- Implement proper error handling and user feedback
+- Use coroutines for asynchronous operations
+- Follow Material Design 3 guidelines for UI components
+
+## 6. Code Quality Standards
+- Write clean, readable, and well-documented code
+- Use meaningful variable and function names
+- Keep functions small and focused on single responsibility
+- Implement proper state management using StateFlow/MutableStateFlow
+- Always handle edge cases and error scenarios gracefully
