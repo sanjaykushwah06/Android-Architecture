@@ -102,7 +102,7 @@ fun BiometricSetupDialog(
                 }
             }
 
-            Spacer(modifier = Modifier.height(Dimens._8dp))
+            Spacer(modifier = Modifier.height(Dimens.dp8))
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodySmall,

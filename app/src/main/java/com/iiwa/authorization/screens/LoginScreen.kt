@@ -29,7 +29,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
+import androidx.compose.material3.DividerDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -71,8 +72,8 @@ fun LoginScreen(
     onNavigateToForgotPassword: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
 
     LaunchedEffect(uiState.isLoginSuccessful) {
         if (uiState.isLoginSuccessful) {
@@ -83,7 +84,7 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(Dimens._24dp),
+            .padding(Dimens.dp24),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -96,7 +97,7 @@ fun LoginScreen(
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(Dimens._8dp))
+        Spacer(modifier = Modifier.height(Dimens.dp8))
 
         Text(
             text = stringResource(R.string.sign_in_to_continue),
@@ -105,7 +106,7 @@ fun LoginScreen(
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(Dimens._48dp))
+        Spacer(modifier = Modifier.height(Dimens.dp48))
 
         // Email Field
         OutlinedTextField(
@@ -134,7 +135,7 @@ fun LoginScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(Dimens._16dp))
+        Spacer(modifier = Modifier.height(Dimens.dp16))
 
         // Password Field
         OutlinedTextField(
@@ -151,13 +152,15 @@ fun LoginScreen(
                 IconButton(onClick = { viewModel.togglePasswordVisibility() }) {
                     Icon(
                         if (uiState.isPasswordVisible) Icons.Outlined.Lock else Icons.Outlined.Lock,
-                        contentDescription = if (uiState.isPasswordVisible) stringResource(R.string.hide_password) else stringResource(
-                            R.string.show_password
-                        )
+                        contentDescription = if (uiState.isPasswordVisible) 
+                            stringResource(R.string.hide_password) 
+                        else stringResource(R.string.show_password)
                     )
                 }
             },
-            visualTransformation = if (uiState.isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            visualTransformation = if (uiState.isPasswordVisible) 
+                VisualTransformation.None 
+            else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
@@ -174,7 +177,7 @@ fun LoginScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(Dimens._8dp))
+        Spacer(modifier = Modifier.height(Dimens.dp8))
 
         // Forgot Password
         Row(
@@ -192,7 +195,7 @@ fun LoginScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(Dimens._24dp))
+        Spacer(modifier = Modifier.height(Dimens.dp24))
 
         // Login Button
         Button(
@@ -200,12 +203,12 @@ fun LoginScreen(
             enabled = !uiState.isLoading && uiState.email.isNotEmpty() && uiState.password.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(Dimens._56dp),
+                .height(Dimens.dp56),
             interactionSource = remember { MutableInteractionSource() }
         ) {
             if (uiState.isLoading) {
                 CircularProgressIndicator(
-                    modifier = Modifier.size(Dimens._24dp),
+                    modifier = Modifier.size(Dimens.dp24),
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             } else {
@@ -217,7 +220,7 @@ fun LoginScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(Dimens._24dp))
+        Spacer(modifier = Modifier.height(Dimens.dp24))
 
         // Biometric Login Button
         OutlinedButton(
@@ -225,15 +228,15 @@ fun LoginScreen(
             enabled = !uiState.isLoading,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(Dimens._56dp),
+                .height(Dimens.dp56),
             interactionSource = remember { MutableInteractionSource() }
         ) {
             Icon(
                 Icons.Default.ThumbUp,
                 contentDescription = "Biometric",
-                modifier = Modifier.size(Dimens._20dp)
+                modifier = Modifier.size(Dimens.dp20)
             )
-            Spacer(modifier = Modifier.width(Dimens._8dp))
+            Spacer(modifier = Modifier.width(Dimens.dp8))
             Text(
                 text = stringResource(R.string.sign_in_with_biometric),
                 fontSize = 16.sp,
@@ -241,23 +244,27 @@ fun LoginScreen(
             )
         }
 
-        Spacer(modifier = Modifier.height(Dimens._32dp))
+        Spacer(modifier = Modifier.height(Dimens.dp32))
 
         // Divider
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Divider(modifier = Modifier.weight(1f))
+            HorizontalDivider(
+                modifier = Modifier.weight(1f),
+                thickness = DividerDefaults.Thickness,
+                color = DividerDefaults.color
+            )
             Text(
                 text = "OR",
-                modifier = Modifier.padding(horizontal = Dimens._16dp),
+                modifier = Modifier.padding(horizontal = Dimens.dp16),
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            Divider(modifier = Modifier.weight(1f))
+            HorizontalDivider(modifier = Modifier.weight(1f))
         }
 
-        Spacer(modifier = Modifier.height(Dimens._24dp))
+        Spacer(modifier = Modifier.height(Dimens.dp24))
 
         // Sign Up Link
         Row(
@@ -283,7 +290,7 @@ fun LoginScreen(
 
         // Error Message
         if (uiState.errorMessage != null) {
-            Spacer(modifier = Modifier.height(Dimens._16dp))
+            Spacer(modifier = Modifier.height(Dimens.dp16))
             Card(
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.errorContainer
@@ -293,7 +300,7 @@ fun LoginScreen(
                 Text(
                     text = uiState.errorMessage!!,
                     color = MaterialTheme.colorScheme.onErrorContainer,
-                    modifier = Modifier.padding(Dimens._16dp),
+                    modifier = Modifier.padding(Dimens.dp16),
                     textAlign = TextAlign.Center
                 )
             }

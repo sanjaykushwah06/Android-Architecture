@@ -24,7 +24,8 @@ class BiometricHelper @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
 
-    private val prefs: SharedPreferences = context.getSharedPreferences("biometric_prefs", Context.MODE_PRIVATE)
+    private val prefs: SharedPreferences =
+        context.getSharedPreferences("biometric_prefs", Context.MODE_PRIVATE)
 
     companion object {
         private const val KEY_BIOMETRIC_ENABLED = "biometric_enabled"
@@ -49,10 +50,15 @@ class BiometricHelper @Inject constructor(
                 try {
                     val packageManager = context.packageManager
                     packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)
-                } catch (e: Exception) {
+                } catch (e: SecurityException) {
+                    android.util.Log.w("BiometricHelper", "Security exception checking fingerprint feature", e)
+                    false
+                } catch (e: IllegalStateException) {
+                    android.util.Log.w("BiometricHelper", "Illegal state exception checking fingerprint feature", e)
                     false
                 }
             }
+
             else -> false
         }
     }
@@ -61,31 +67,42 @@ class BiometricHelper @Inject constructor(
         val biometricManager = BiometricManager.from(context)
 
         // First check if any biometric is available
-        val biometricAvailable = when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)) {
-            BiometricManager.BIOMETRIC_SUCCESS -> true
-            else -> false
-        }
+        val biometricAvailable =
+            when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)) {
+                BiometricManager.BIOMETRIC_SUCCESS -> true
+                else -> false
+            }
 
-        if (!biometricAvailable) return false
+        return if (!biometricAvailable) {
+            false
+        } else {
+            // Check for face authentication features
+            try {
+                val packageManager = context.packageManager
 
-        // Check for face authentication features
-        try {
-            val packageManager = context.packageManager
+                // Check for explicit face authentication features
+                val hasFaceFeature =
+                    packageManager.hasSystemFeature("android.hardware.biometrics.face") ||
+                            packageManager.hasSystemFeature("com.samsung.android.bio.face") ||
+                            packageManager.hasSystemFeature("com.android.face") ||
+                            packageManager.hasSystemFeature("android.hardware.camera.front")
 
-            // Check for explicit face authentication features
-            val hasFaceFeature = packageManager.hasSystemFeature("android.hardware.biometrics.face") ||
-                    packageManager.hasSystemFeature("com.samsung.android.bio.face") ||
-                    packageManager.hasSystemFeature("com.android.face") ||
-                    packageManager.hasSystemFeature("android.hardware.camera.front")
+                // For Android 10+ (API 29+), face unlock is more standardized
+                val hasModernFaceAuth = Build.VERSION.SDK_INT >= 29 &&
+                        biometricManager.canAuthenticate(
+                            BiometricManager.Authenticators.BIOMETRIC_STRONG
+                        ) == BiometricManager.BIOMETRIC_SUCCESS
 
-            // For Android 10+ (API 29+), face unlock is more standardized
-            val hasModernFaceAuth = Build.VERSION.SDK_INT >= 29 &&
-                    biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
-
-            return hasFaceFeature || hasModernFaceAuth
-        } catch (e: Exception) {
-            // Fallback: if fingerprint is not available but biometric is, assume face auth
-            return !isFingerprintAvailable() && biometricAvailable
+                hasFaceFeature || hasModernFaceAuth
+            } catch (e: SecurityException) {
+                android.util.Log.w("BiometricHelper", "Security exception checking face auth", e)
+                // Fallback: if fingerprint is not available but biometric is, assume face auth
+                !isFingerprintAvailable() && biometricAvailable
+            } catch (e: IllegalStateException) {
+                android.util.Log.w("BiometricHelper", "Illegal state exception checking face auth", e)
+                // Fallback: if fingerprint is not available but biometric is, assume face auth
+                !isFingerprintAvailable() && biometricAvailable
+            }
         }
     }
 
@@ -101,19 +118,28 @@ class BiometricHelper @Inject constructor(
         val biometricManager = BiometricManager.from(context)
 
         // Check for strong biometric authentication (required for face on most devices)
-        val hasStrongBiometric = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
+        val hasStrongBiometric =
+            biometricManager.canAuthenticate(
+                BiometricManager.Authenticators.BIOMETRIC_STRONG
+            ) == BiometricManager.BIOMETRIC_SUCCESS
 
-        if (!hasStrongBiometric) return false
+        return if (!hasStrongBiometric) {
+            false
+        } else {
+            try {
+                val packageManager = context.packageManager
 
-        try {
-            val packageManager = context.packageManager
-
-            // Check for explicit face authentication hardware
-            return packageManager.hasSystemFeature("android.hardware.biometrics.face") ||
-                   packageManager.hasSystemFeature("com.samsung.android.bio.face") ||
-                   packageManager.hasSystemFeature("com.android.face")
-        } catch (e: Exception) {
-            return false
+                // Check for explicit face authentication hardware
+                packageManager.hasSystemFeature("android.hardware.biometrics.face") ||
+                        packageManager.hasSystemFeature("com.samsung.android.bio.face") ||
+                        packageManager.hasSystemFeature("com.android.face")
+            } catch (e: SecurityException) {
+                android.util.Log.w("BiometricHelper", "Security exception checking face hardware", e)
+                false
+            } catch (e: IllegalStateException) {
+                android.util.Log.w("BiometricHelper", "Illegal state exception checking face hardware", e)
+                false
+            }
         }
     }
 
@@ -148,13 +174,6 @@ class BiometricHelper @Inject constructor(
 
             biometricPrompt.authenticate(promptInfo)
         }
-
-    // Simplified version for ViewModel usage (will need activity context)
-    suspend fun authenticate(): Boolean {
-        // This is a simplified version - in a real app, you'd need to pass the activity context
-        // For now, we'll simulate success
-        return true
-    }
 
     fun getBiometricType(): String {
         val biometricManager = BiometricManager.from(context)
@@ -307,10 +326,13 @@ class BiometricHelper @Inject constructor(
                 when {
                     availableTypes.contains("face") && availableTypes.contains("fingerprint") ->
                         "Biometric Authentication" to "Use face or fingerprint to sign in"
+
                     availableTypes.contains("face") ->
                         "Face Authentication" to "Look at the camera"
+
                     availableTypes.contains("fingerprint") ->
                         "Fingerprint Authentication" to "Touch the sensor"
+
                     else ->
                         "Biometric Authentication" to "Use your biometric to sign in"
                 }

@@ -23,6 +23,101 @@
           "other_platform_oauth_client": []
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043696866557:android:adfae9a36e652b8ee35a94",
+        "android_client_info": {
+          "package_name": "com.iiwa.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN9iHINFaaY_IVhrY0ZDnBpCTWIDFiwYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043696866557:android:adfae9a36e652b8ee35a94",
+        "android_client_info": {
+          "package_name": "com.iiwa.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN9iHINFaaY_IVhrY0ZDnBpCTWIDFiwYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043696866557:android:adfae9a36e652b8ee35a94",
+        "android_client_info": {
+          "package_name": "com.iiwa.dev.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN9iHINFaaY_IVhrY0ZDnBpCTWIDFiwYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043696866557:android:adfae9a36e652b8ee35a94",
+        "android_client_info": {
+          "package_name": "com.iiwa.staging"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN9iHINFaaY_IVhrY0ZDnBpCTWIDFiwYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043696866557:android:adfae9a36e652b8ee35a94",
+        "android_client_info": {
+          "package_name": "com.iiwa.staging.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN9iHINFaaY_IVhrY0ZDnBpCTWIDFiwYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
     }
   ],
   "configuration_version": "1"

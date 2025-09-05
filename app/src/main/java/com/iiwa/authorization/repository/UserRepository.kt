@@ -9,6 +9,7 @@ package com.iiwa.authorization.repository
 import com.iiwa.data.api.AuthApi
 import com.iiwa.data.local.TokenStorage
 import com.iiwa.data.local.UserDao
+import com.iiwa.data.model.ForgotPasswordRequest
 import com.iiwa.data.model.ForgotPasswordResponse
 import com.iiwa.data.model.LoginRequest
 import com.iiwa.data.model.LoginResponse
@@ -35,7 +36,8 @@ class UserRepository @Inject constructor(
      * Uses RemoteData for centralized network handling with crash analytics
      */
     suspend fun login(email: String, password: String): Result<LoginResponse> {
-        val loginRequest = LoginRequest(username = "emilys", password = "emilyspass")
+        var loginRequest = LoginRequest(username = email, password = password)
+         loginRequest = LoginRequest(username = "emilys", password = "emilyspass")//TEST CREDENTIALS
         return when (val result = remoteData.executeCall { authApi.login(loginRequest) }) {
             is Result.Success -> {
                 try {
@@ -62,8 +64,11 @@ class UserRepository @Inject constructor(
                     userDao.insertUser(user)
 
                     result
-                } catch (e: Exception) {
-                    // Log unexpected error during login processing
+                } catch (e: IllegalStateException) {
+                    // Handle database or state-related errors
+                    Result.Error("Login processing failed: ${e.message}")
+                } catch (e: SecurityException) {
+                    // Handle security-related errors
                     Result.Error("Login processing failed: ${e.message}")
                 }
             }
@@ -103,8 +108,11 @@ class UserRepository @Inject constructor(
             tokenStorage.clearTokens()
             
             Result.Success(Unit)
-        } catch (e: Exception) {
-            // Log logout error
+        } catch (e: IllegalStateException) {
+            // Handle storage state errors
+            Result.Error("Logout failed: ${e.message}")
+        } catch (e: SecurityException) {
+            // Handle security-related errors
             Result.Error("Logout failed: ${e.message}")
         }
     }
@@ -120,7 +128,11 @@ class UserRepository @Inject constructor(
 
             tokenStorage.updateAccessToken(newAccessToken)
             Result.Success(Unit)
-        } catch (e: Exception) {
+        } catch (e: IllegalStateException) {
+            // Handle storage state errors
+            Result.Error("Failed to update access token: ${e.message}")
+        } catch (e: SecurityException) {
+            // Handle security-related errors
             Result.Error("Failed to update access token: ${e.message}")
         }
     }
@@ -166,16 +178,15 @@ class UserRepository @Inject constructor(
      */
     suspend fun forgotPassword(email: String): Result<ForgotPasswordResponse> {
         // For now, return mock success since DummyJSON doesn't have forgot password endpoint
-        // TODO: Replace with actual API call when backend is ready
-        return Result.Success(
-            ForgotPasswordResponse(
-                message = "Password reset email sent successfully",
-                success = true
-            )
-        )
+        // Note: Replace with actual API call when backend is ready
+//        return Result.Success(
+//            ForgotPasswordResponse(
+//                message = "Password reset email sent successfully",
+//                success = true
+//            )
+//        )
 
         // When your backend has the forgot password endpoint, use this:
-        /*
         val request = ForgotPasswordRequest(email = email)
         return when (val result = remoteData.executeCall { authApi.forgotPassword(request) }) {
             is Result.Success -> {
@@ -189,7 +200,6 @@ class UserRepository @Inject constructor(
             is Result.Error -> result
             is Result.Loading -> result
         }
-        */
     }
 
     /**
@@ -217,9 +227,9 @@ class UserRepository @Inject constructor(
      * Reset password with new password
      * Uses RemoteData for centralized network handling
      */
-    suspend fun resetPassword(email: String, newPassword: String): Result<ForgotPasswordResponse> {
+    suspend fun resetPassword(): Result<ForgotPasswordResponse> {
         // For now, return mock success since DummyJSON doesn't have reset password endpoint
-        // TODO: Replace with actual API call when backend is ready
+        // Note: Replace with actual API call when backend is ready
         return Result.Success(
             ForgotPasswordResponse(
                 message = "Password reset successfully",

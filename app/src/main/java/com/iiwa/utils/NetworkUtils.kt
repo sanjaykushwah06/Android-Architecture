@@ -17,44 +17,50 @@ import javax.inject.Singleton
 class NetworkUtils @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    
+
     /**
      * Check if device has internet connectivity
      */
     fun isInternetAvailable(): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        
-        val network = connectivityManager.activeNetwork ?: return false
-        val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
-        
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val network = connectivityManager.activeNetwork
+        val networkCapabilities = network?.let { connectivityManager.getNetworkCapabilities(it) }
+
         // Check if network has internet capability (less strict than VALIDATED)
-        return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+        return network != null && networkCapabilities != null &&
+                networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
-    
+
     /**
      * Check if device is connected to WiFi
      */
     fun isWifiConnected(): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        
-        val network = connectivityManager.activeNetwork ?: return false
-        val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
-        
-        return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val network = connectivityManager.activeNetwork
+        val networkCapabilities = network?.let { connectivityManager.getNetworkCapabilities(it) }
+
+        return network != null && networkCapabilities != null &&
+                networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
     }
-    
+
     /**
      * Check if device is connected to mobile data
      */
     fun isMobileDataConnected(): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        
-        val network = connectivityManager.activeNetwork ?: return false
-        val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
-        
-        return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val network = connectivityManager.activeNetwork
+        val networkCapabilities = network?.let { connectivityManager.getNetworkCapabilities(it) }
+
+        return network != null && networkCapabilities != null &&
+                networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
     }
-    
+
     /**
      * Get current network type as string
      */
@@ -66,24 +72,41 @@ class NetworkUtils @Inject constructor(
             else -> "No Internet"
         }
     }
-    
+
     /**
      * Get detailed network information for debugging
      */
     fun getNetworkDebugInfo(): String {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
         val network = connectivityManager.activeNetwork
         val networkCapabilities = network?.let { connectivityManager.getNetworkCapabilities(it) }
-        
+
         return buildString {
             appendLine("Active Network: ${network != null}")
             appendLine("Network Capabilities: ${networkCapabilities != null}")
             if (networkCapabilities != null) {
-                appendLine("Has Internet: ${networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)}")
-                appendLine("Has Validated: ${networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)}")
-                appendLine("Is WiFi: ${networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)}")
-                appendLine("Is Cellular: ${networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)}")
+                appendLine(
+                    "Has Internet: ${
+                        networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                    }"
+                )
+                appendLine(
+                    "Has Validated: ${
+                        networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+                    }"
+                )
+                appendLine(
+                    "Is WiFi: ${
+                        networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                    }"
+                )
+                appendLine(
+                    "Is Cellular: ${
+                        networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                    }"
+                )
             }
         }
     }

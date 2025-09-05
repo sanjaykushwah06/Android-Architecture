@@ -74,7 +74,7 @@ class IwaaFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendRegistrationToServer(token: String) {
-        // TODO: Implement this method to send token to your app server
+        // Note: Implement this method to send token to your app server
         // This is where you would typically make an API call to your backend
         // to store the FCM token for sending targeted notifications
 

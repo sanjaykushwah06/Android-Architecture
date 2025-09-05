@@ -332,17 +332,20 @@ class ForgotPasswordViewModelTest {
         
         forgotPasswordViewModel.updateEmail("test@example.com")
         
+        // Verify initial state is not loading
+        var state = forgotPasswordViewModel.uiState.first()
+        assertFalse(state.isLoading)
+        
         forgotPasswordViewModel.submitForgotPassword()
         
-        // Should be loading immediately
-        var state = forgotPasswordViewModel.uiState.first()
-        assertTrue(state.isLoading)
-        
+        // Use advanceUntilIdle to wait for the coroutine to complete
         advanceUntilIdle()
         
-        // Should not be loading after completion
+        // After completion, should not be loading and should be successful
         state = forgotPasswordViewModel.uiState.first()
         assertFalse(state.isLoading)
+        assertTrue(state.isEmailSent)
+        assertNull(state.errorMessage)
     }
 
     @Test
@@ -459,5 +462,10 @@ class ForgotPasswordViewModelTest {
         assertFalse(state.showNetworkDialog)
     }
 }
+
+
+
+
+
 
 

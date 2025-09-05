@@ -3,13 +3,11 @@
     <!-- === Project-wide Lint Configuration === -->
     
     <!-- === Code Quality === -->
-    <issue id="UnusedImport" severity="error" />
-    <issue id="UnusedVariable" severity="warning" />
-    <issue id="UnusedParameter" severity="warning" />
-    <issue id="DeadCode" severity="error" />
-    <issue id="UnusedField" severity="warning" />
-    <issue id="UnusedMethod" severity="warning" />
-    <issue id="UnusedClass" severity="warning" />
+    <issue id="KotlinUnusedImports" severity="error" />
+    <issue id="KotlinUnusedVariables" severity="warning" />
+    <issue id="KotlinUnusedParameters" severity="warning" />
+    <issue id="UnusedResources" severity="error" />
+    <issue id="UnusedIds" severity="warning" />
     
     <!-- === Security === -->
     <issue id="HardcodedDebugMode" severity="error" />

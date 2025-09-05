@@ -6,7 +6,6 @@
 
 package com.iiwa.authorization.screens
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,7 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -86,7 +85,7 @@ fun ResetPasswordScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(Dimens._24dp),
+            .padding(Dimens.dp24),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Header with back button
@@ -96,29 +95,29 @@ fun ResetPasswordScreen(
         ) {
             IconButton(
                 onClick = onNavigateBack,
-                modifier = Modifier.size(Dimens._48dp)
+                modifier = Modifier.size(Dimens.dp48)
             ) {
                 Icon(
-                    Icons.Default.ArrowBack,
+                    Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    modifier = Modifier.size(Dimens._24dp)
+                    modifier = Modifier.size(Dimens.dp24)
                 )
             }
 
             Spacer(modifier = Modifier.weight(1f))
         }
 
-        Spacer(modifier = Modifier.height(Dimens._32dp))
+        Spacer(modifier = Modifier.height(Dimens.dp32))
 
         // Lock Icon
         Icon(
             Icons.Filled.Lock,
             contentDescription = "Reset Password",
-            modifier = Modifier.size(Dimens._80dp),
+            modifier = Modifier.size(Dimens.dp80),
             tint = MaterialTheme.colorScheme.primary
         )
 
-        Spacer(modifier = Modifier.height(Dimens._24dp))
+        Spacer(modifier = Modifier.height(Dimens.dp24))
 
         // Title
         Text(
@@ -129,7 +128,7 @@ fun ResetPasswordScreen(
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(Dimens._16dp))
+        Spacer(modifier = Modifier.height(Dimens.dp16))
 
         Text(
             text = stringResource(R.string.reset_password_subtitle, email),
@@ -139,7 +138,7 @@ fun ResetPasswordScreen(
             lineHeight = 24.sp
         )
 
-        Spacer(modifier = Modifier.height(Dimens._32dp))
+        Spacer(modifier = Modifier.height(Dimens.dp32))
 
         // Password Field
         OutlinedTextField(
@@ -176,7 +175,7 @@ fun ResetPasswordScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(Dimens._16dp))
+        Spacer(modifier = Modifier.height(Dimens.dp16))
 
         // Confirm Password Field
         OutlinedTextField(
@@ -210,17 +209,17 @@ fun ResetPasswordScreen(
             keyboardActions = KeyboardActions(
                 onDone = { 
                     focusManager.clearFocus()
-                    viewModel.resetPassword(email)
+                    viewModel.resetPassword(/*email*/)
                 }
             ),
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(Dimens._32dp))
+        Spacer(modifier = Modifier.height(Dimens.dp32))
 
         // Reset Password Button
         Button(
-            onClick = { viewModel.resetPassword(email) },
+            onClick = { viewModel.resetPassword(/*email*/) },
             enabled = !uiState.isLoading && uiState.password.isNotEmpty() && uiState.confirmPassword.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()
@@ -240,7 +239,7 @@ fun ResetPasswordScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(Dimens._16dp))
+        Spacer(modifier = Modifier.height(Dimens.dp16))
 
         // Back to Login Button
         TextButton(

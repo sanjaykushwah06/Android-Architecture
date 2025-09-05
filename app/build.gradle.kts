@@ -162,7 +162,7 @@ detekt {
     buildUponDefaultConfig = true
     allRules = false
     config.setFrom("$rootDir/config/detekt.yml")
-    baseline = file("$rootDir/config/detekt-baseline.xml")
+    // baseline = file("$rootDir/config/detekt-baseline.xml")
     
     reports {
         html.required.set(true)
@@ -170,5 +170,26 @@ detekt {
         txt.required.set(true)
         sarif.required.set(false)
         md.required.set(false)
+    }
+}
+// Ensure lint + detekt run before build
+tasks.named("build") {
+    dependsOn("lint", "detekt")
+}
+
+// Ensure clean also triggers lint + detekt after cleaning
+tasks.named("clean") {
+    finalizedBy("lint", "detekt")
+}
+
+// ----- DETEKT CONFIG -----
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    reports {
+        // Console output enabled
+        txt.required.set(true)
+        txt.outputLocation.set(file("$buildDir/reports/detekt/detekt-result.txt"))
+
+        html.required.set(true)
+        xml.required.set(true)
     }
 }

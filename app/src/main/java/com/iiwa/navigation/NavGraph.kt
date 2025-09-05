@@ -16,14 +16,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.navArgument
-import com.iiwa.components.ConfirmDialog
-import com.iiwa.home.screens.DetailsScreen
 import com.iiwa.authorization.screens.ForgotPasswordScreen
-import com.iiwa.home.screens.HomeScreen
 import com.iiwa.authorization.screens.LoginScreen
 import com.iiwa.authorization.screens.OtpScreen
 import com.iiwa.authorization.screens.ResetPasswordScreen
 import com.iiwa.authorization.screens.SignupScreen
+import com.iiwa.components.ConfirmDialog
+import com.iiwa.home.screens.DetailsScreen
+import com.iiwa.home.screens.HomeScreen
 import com.iiwa.home.viewmodels.DetailsViewModel
 
 @Composable

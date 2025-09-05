@@ -45,7 +45,7 @@ fun NetworkAlertDialog(
         dismissButtonAction = onSettings,
         dismissButtonStyle = AlertButtonStyle.TEXT,
         content = {
-            Spacer(modifier = Modifier.height(Dimens._8dp))
+            Spacer(modifier = Modifier.height(Dimens.dp8))
             Text(
                 text = stringResource(R.string.no_internet_subtitle),
                 style = MaterialTheme.typography.bodySmall,
@@ -79,7 +79,7 @@ fun NotificationPermissionDialog(
         dismissButtonAction = onDismiss,
         dismissButtonStyle = AlertButtonStyle.TEXT,
         content = {
-            Spacer(modifier = Modifier.height(Dimens._16dp))
+            Spacer(modifier = Modifier.height(Dimens.dp16))
             Text(
                 text = "You can disable notifications anytime in your device settings.",
                 style = MaterialTheme.typography.bodySmall,

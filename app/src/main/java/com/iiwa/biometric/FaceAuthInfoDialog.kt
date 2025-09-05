@@ -44,20 +44,22 @@ fun FaceAuthInfoDialog(
         content = {
             Column {
                 FaceIcon(
-                    size = Dimens._48dp,
+                    size = Dimens.dp48,
                     color = MaterialTheme.colorScheme.error
                 )
 
-                Spacer(modifier = Modifier.height(Dimens._8dp))
+                Spacer(modifier = Modifier.height(Dimens.dp8))
 
                 Text(
-                    text = "Most Android devices don't have dedicated face authentication hardware like iPhones. The system may use the front camera with less secure recognition.",
+                    text = "Most Android devices don't have dedicated " +
+                            "face authentication hardware like iPhones. " +
+                            "The system may use the front camera with less secure recognition.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(Dimens._8dp))
+                Spacer(modifier = Modifier.height(Dimens.dp8))
 
                 Text(
                     text = "For better security, we recommend using fingerprint authentication.",

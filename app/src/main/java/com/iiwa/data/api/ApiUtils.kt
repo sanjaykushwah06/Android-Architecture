@@ -6,6 +6,7 @@ import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import java.io.IOException
+import java.net.MalformedURLException
 import java.net.URL
 
 object ApiUtils {
@@ -155,6 +156,7 @@ object ApiUtils {
         return try {
             responseBody?.string()
         } catch (e: IOException) {
+            android.util.Log.w("ApiUtils", "IOException parsing response body", e)
             null
         }
     }
@@ -191,7 +193,7 @@ object ApiUtils {
         return try {
             URL(url)
             true
-        } catch (e: Exception) {
+        } catch (e: MalformedURLException) {
             false
         }
     }
@@ -202,7 +204,7 @@ object ApiUtils {
     fun extractDomain(url: String): String? {
         return try {
             URL(url).host
-        } catch (e: Exception) {
+        } catch (e: MalformedURLException) {
             null
         }
     }
@@ -213,7 +215,7 @@ object ApiUtils {
     fun extractPath(url: String): String? {
         return try {
             URL(url).path
-        } catch (e: Exception) {
+        } catch (e: MalformedURLException) {
             null
         }
     }

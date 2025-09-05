@@ -6,8 +6,6 @@
 
 package com.iiwa.authorization.screens
 
-import android.content.Intent
-import android.provider.Settings
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,7 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
@@ -88,7 +86,7 @@ fun OtpScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(Dimens._24dp),
+            .padding(Dimens.dp24),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Header with back button
@@ -98,22 +96,22 @@ fun OtpScreen(
         ) {
             IconButton(
                 onClick = onNavigateBack,
-                modifier = Modifier.size(Dimens._48dp)
+                modifier = Modifier.size(Dimens.dp48)
             ) {
                 Icon(
-                    Icons.Default.ArrowBack,
+                    Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    modifier = Modifier.size(Dimens._24dp)
+                    modifier = Modifier.size(Dimens.dp24)
                 )
             }
             
             Spacer(modifier = Modifier.weight(1f))
         }
 
-        Spacer(modifier = Modifier.height(Dimens._32dp))
+        Spacer(modifier = Modifier.height(Dimens.dp32))
 
         // OTP Input State
-        OtpInputContent(
+        otpInputContent(
             uiState = uiState,
             onOtpChange = { viewModel.updateOtp(it) },
             onVerifyOtp = { viewModel.verifyOtp() },
@@ -128,8 +126,8 @@ fun OtpScreen(
         onRetry = { viewModel.retryVerification() },
         onSettings = {
             // Open device settings
-            val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
             // Note: In a real app, you'd need to handle this properly
+            // val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
             viewModel.hideNetworkDialog()
         }
     )
@@ -137,12 +135,12 @@ fun OtpScreen(
     // Snackbar for OTP resent message
     SnackbarHost(
         hostState = snackbarHostState,
-        modifier = Modifier.padding(Dimens._16dp)
+        modifier = Modifier.padding(Dimens.dp16)
     )
 }
 
 @Composable
-private fun OtpInputContent(
+private fun otpInputContent(
     uiState: OtpUiState,
     onOtpChange: (String) -> Unit,
     onVerifyOtp: () -> Unit,
@@ -156,11 +154,11 @@ private fun OtpInputContent(
         Icon(
             Icons.Default.Settings,
             contentDescription = "OTP",
-            modifier = Modifier.size(Dimens._80dp),
+            modifier = Modifier.size(Dimens.dp80),
             tint = MaterialTheme.colorScheme.primary
         )
 
-        Spacer(modifier = Modifier.height(Dimens._24dp))
+        Spacer(modifier = Modifier.height(Dimens.dp24))
 
         // Title
         Text(
@@ -171,7 +169,7 @@ private fun OtpInputContent(
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(Dimens._16dp))
+        Spacer(modifier = Modifier.height(Dimens.dp16))
 
         // Subtitle
         Text(
@@ -182,7 +180,7 @@ private fun OtpInputContent(
             lineHeight = 24.sp
         )
         
-        Spacer(modifier = Modifier.height(Dimens._8dp))
+        Spacer(modifier = Modifier.height(Dimens.dp8))
         
         // Test OTP Hint - Remove this in production when implementing real OTP
         Text(
@@ -193,7 +191,7 @@ private fun OtpInputContent(
             fontWeight = FontWeight.Medium
         )
 
-        Spacer(modifier = Modifier.height(Dimens._8dp))
+        Spacer(modifier = Modifier.height(Dimens.dp8))
 
         // Email display
         Text(
@@ -204,7 +202,7 @@ private fun OtpInputContent(
             fontWeight = FontWeight.Medium
         )
 
-        Spacer(modifier = Modifier.height(Dimens._48dp))
+        Spacer(modifier = Modifier.height(Dimens.dp48))
 
         // OTP Input Field
         OutlinedTextField(
@@ -233,7 +231,7 @@ private fun OtpInputContent(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(Dimens._32dp))
+        Spacer(modifier = Modifier.height(Dimens.dp32))
 
         // Error Message
         if (uiState.errorMessage != null) {
@@ -246,11 +244,11 @@ private fun OtpInputContent(
                 Text(
                     text = uiState.errorMessage!!,
                     color = MaterialTheme.colorScheme.onErrorContainer,
-                    modifier = Modifier.padding(Dimens._16dp),
+                    modifier = Modifier.padding(Dimens.dp16),
                     textAlign = TextAlign.Center
                 )
             }
-            Spacer(modifier = Modifier.height(Dimens._16dp))
+            Spacer(modifier = Modifier.height(Dimens.dp16))
         }
 
         // Verify OTP Button
@@ -259,11 +257,11 @@ private fun OtpInputContent(
             enabled = !uiState.isLoading && uiState.otp.length == 4 && uiState.otpError == null,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(Dimens._56dp)
+                .height(Dimens.dp56)
         ) {
             if (uiState.isLoading) {
                 CircularProgressIndicator(
-                    modifier = Modifier.size(Dimens._24dp),
+                    modifier = Modifier.size(Dimens.dp24),
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             } else {
@@ -275,7 +273,7 @@ private fun OtpInputContent(
             }
         }
 
-        Spacer(modifier = Modifier.height(Dimens._32dp))
+        Spacer(modifier = Modifier.height(Dimens.dp32))
 
         // Resend OTP Section
         Column(
@@ -289,17 +287,17 @@ private fun OtpInputContent(
                 ) {
                     if (uiState.isResendingOtp) {
                         CircularProgressIndicator(
-                            modifier = Modifier.size(Dimens._16dp),
+                            modifier = Modifier.size(Dimens.dp16),
                             color = MaterialTheme.colorScheme.primary
                         )
-                        Spacer(modifier = Modifier.width(Dimens._8dp))
+                        Spacer(modifier = Modifier.width(Dimens.dp8))
                     } else {
                         Icon(
                             Icons.Default.Refresh,
                             contentDescription = "Resend OTP",
-                            modifier = Modifier.size(Dimens._16dp)
+                            modifier = Modifier.size(Dimens.dp16)
                         )
-                        Spacer(modifier = Modifier.width(Dimens._8dp))
+                        Spacer(modifier = Modifier.width(Dimens.dp8))
                     }
                     Text(
                         text = stringResource(R.string.resend_otp),

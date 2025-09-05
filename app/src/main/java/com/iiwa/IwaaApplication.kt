@@ -36,8 +36,10 @@ class IwaaApplication : Application() {
             initializeFirebaseMessaging()
             
             Log.d(TAG, "IwaaApplication initialized successfully")
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to initialize IwaaApplication", e)
+        } catch (e: IllegalStateException) {
+            Log.e(TAG, "Failed to initialize IwaaApplication - Illegal state", e)
+        } catch (e: SecurityException) {
+            Log.e(TAG, "Failed to initialize IwaaApplication - Security error", e)
         }
     }
 
@@ -48,7 +50,7 @@ class IwaaApplication : Application() {
                 val token = firebaseMessagingManager.getToken()
                 if (token != null) {
                     Log.d(TAG, "FCM Token obtained: $token")
-                    // TODO: Send token to your server here
+                    // Note: Send token to your server here
                     // You can store it locally or send it to your backend API
                 }
                 
@@ -57,8 +59,10 @@ class IwaaApplication : Application() {
             }
             
             Log.d(TAG, "Firebase Cloud Messaging initialized successfully")
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to initialize Firebase Cloud Messaging", e)
+        } catch (e: IllegalStateException) {
+            Log.e(TAG, "Failed to initialize Firebase Cloud Messaging - Illegal state", e)
+        } catch (e: SecurityException) {
+            Log.e(TAG, "Failed to initialize Firebase Cloud Messaging - Security error", e)
         }
     }
     

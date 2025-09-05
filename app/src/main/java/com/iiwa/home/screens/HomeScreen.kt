@@ -20,7 +20,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -32,7 +32,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
@@ -46,26 +45,25 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onLogout: () -> Unit
 ) {
-    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
-    
+
     // Create notification permission launcher
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         viewModel.onNotificationPermissionResult(isGranted)
     }
-    
+
     LaunchedEffect(uiState.isLoggedOut) {
         if (uiState.isLoggedOut) {
             onLogout()
         }
     }
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(Dimens._24dp),
+            .padding(Dimens.dp24),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -80,57 +78,50 @@ fun HomeScreen(
                 color = MaterialTheme.colorScheme.primary,
                 textAlign = TextAlign.Center
             )
-            
-            Spacer(modifier = Modifier.height(Dimens._8dp))
-            
+
+            Spacer(modifier = Modifier.height(Dimens.dp8))
+
             Text(
                 text = "User ID: ${uiState.userId}",
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
             )
-            
-            Spacer(modifier = Modifier.height(Dimens._16dp))
-            
+
+            Spacer(modifier = Modifier.height(Dimens.dp16))
+
             Text(
                 text = "You have successfully logged in",
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
             )
-            
-            Spacer(modifier = Modifier.height(Dimens._48dp))
-            
+
+            Spacer(modifier = Modifier.height(Dimens.dp48))
+
             // Logout Button
             Button(
                 onClick = { viewModel.logout() },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(Dimens._56dp),
+                    .height(Dimens.dp56),
                 enabled = !uiState.isLoading
             ) {
-                if (uiState.isLoading) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(Dimens._16dp),
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
-                    Spacer(modifier = Modifier.width(Dimens._8dp))
-                }
                 Icon(
-                    Icons.Default.ExitToApp,
+                    Icons.AutoMirrored.Filled.ExitToApp,
                     contentDescription = "Logout",
-                    modifier = Modifier.size(Dimens._20dp)
+                    modifier = Modifier.size(Dimens.dp20)
                 )
-                Spacer(modifier = Modifier.width(Dimens._8dp))
+                Spacer(modifier = Modifier.width(Dimens.dp8))
                 Text(
                     text = "Logout",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium
                 )
             }
-            
+
             uiState.errorMessage?.let { error ->
-                Spacer(modifier = Modifier.height(Dimens._16dp))
+                Spacer(modifier = Modifier.height(Dimens.dp16))
                 Text(
                     text = error,
                     fontSize = 16.sp,
@@ -140,7 +131,7 @@ fun HomeScreen(
             }
         }
     }
-    
+
     // Notification Permission Dialog
     NotificationPermissionDialog(
         showDialog = uiState.shouldShowNotificationPermissionDialog,

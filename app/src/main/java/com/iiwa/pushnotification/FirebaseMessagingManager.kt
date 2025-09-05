@@ -23,8 +23,11 @@ class FirebaseMessagingManager @Inject constructor() {
             val token = FirebaseMessaging.getInstance().token.await()
             Log.d(TAG, "FCM Token: $token")
             token
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to get FCM token", e)
+        } catch (e: IllegalStateException) {
+            Log.e(TAG, "Failed to get FCM token - Illegal state", e)
+            null
+        } catch (e: SecurityException) {
+            Log.e(TAG, "Failed to get FCM token - Security error", e)
             null
         }
     }
@@ -33,8 +36,10 @@ class FirebaseMessagingManager @Inject constructor() {
         try {
             FirebaseMessaging.getInstance().subscribeToTopic(topic).await()
             Log.d(TAG, "Successfully subscribed to topic: $topic")
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to subscribe to topic: $topic", e)
+        } catch (e: IllegalStateException) {
+            Log.e(TAG, "Failed to subscribe to topic: $topic - Illegal state", e)
+        } catch (e: SecurityException) {
+            Log.e(TAG, "Failed to subscribe to topic: $topic - Security error", e)
         }
     }
 
@@ -42,17 +47,14 @@ class FirebaseMessagingManager @Inject constructor() {
         try {
             FirebaseMessaging.getInstance().unsubscribeFromTopic(topic).await()
             Log.d(TAG, "Successfully unsubscribed from topic: $topic")
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to unsubscribe from topic: $topic", e)
-        }
-    }
-
-    fun deleteToken() {
-        try {
-            FirebaseMessaging.getInstance().deleteToken()
-            Log.d(TAG, "FCM token deleted")
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to delete FCM token", e)
+        } catch (e: IllegalStateException) {
+            Log.e(TAG, "Failed to unsubscribe from topic: $topic - Illegal state", e)
+        } catch (e: SecurityException) {
+            Log.e(TAG, "Failed to unsubscribe from topic: $topic - Security error", e)
+        } catch (e: UnsupportedOperationException) {
+            Log.e(TAG, "Failed to unsubscribe from topic: $topic - Unsupported operation", e)
+        } catch (e: IllegalArgumentException) {
+            Log.e(TAG, "Failed to unsubscribe from topic: $topic - Invalid argument", e)
         }
     }
 }

@@ -10,6 +10,7 @@ import com.iiwa.data.error.NETWORK_ERROR
 import com.iiwa.data.error.NO_INTERNET_CONNECTION
 import com.iiwa.utils.NetworkConnectivity
 import com.iiwa.utils.Result
+import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
@@ -34,6 +35,7 @@ class RemoteData @Inject constructor(private val networkConnectivity: NetworkCon
                 response.code()
             }
         } catch (e: IOException) {
+            android.util.Log.w("RemoteData", "IOException in API call", e)
             NETWORK_ERROR
         }
     }
@@ -72,9 +74,11 @@ class RemoteData @Inject constructor(private val networkConnectivity: NetworkCon
                 Result.Error(errorMessage)
             }
         } catch (e: IOException) {
+            android.util.Log.w("RemoteData", "IOException in API call", e)
             Result.Error("Network connection error")
-        } catch (e: Exception) {
-            Result.Error("Request failed: ${e.message ?: "Unknown error"}")
+        } catch (e: HttpException) {
+            android.util.Log.w("RemoteData", "HttpException in API call", e)
+            Result.Error("HTTP error: ${e.code()}")
         }
     }
 }

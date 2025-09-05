@@ -5,11 +5,10 @@ import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iiwa.R
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
+import java.util.regex.PatternSyntaxException
 
 /**
  * Base ViewModel class providing common functionality for all ViewModels
@@ -48,7 +47,7 @@ abstract class BaseViewModel<T : Any>(
      */
     protected open fun validateEmail(email: String): String? {
         return when {
-            email.isEmpty() -> context.getString(R.string.email_required)
+            email.trim().isEmpty() -> context.getString(R.string.email_required)
             !isValidEmail(email) -> context.getString(R.string.email_invalid_format)
             else -> null
         }
@@ -66,15 +65,17 @@ abstract class BaseViewModel<T : Any>(
                 Patterns.EMAIL_ADDRESS.matcher(email).matches()
             } else {
                 // Fallback pattern for unit tests (when Patterns.EMAIL_ADDRESS is null)
+                // More strict pattern that validates proper domain format
                 val emailPattern = Pattern.compile(
-                    "^[A-Za-z0-9+_.-]+@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})$"
+                    "^[A-Za-z0-9+_.-]+@[A-Za-z0-9][A-Za-z0-9.-]*[A-Za-z0-9]\\.[A-Za-z]{2,}$"
                 )
                 emailPattern.matcher(email).matches()
             }
-        } catch (e: Exception) {
+        } catch (e: PatternSyntaxException) {
+            android.util.Log.w("BaseViewModel", "Pattern syntax exception in email validation", e)
             // Fallback pattern if any exception occurs
             val emailPattern = Pattern.compile(
-                "^[A-Za-z0-9+_.-]+@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})$"
+                "^[A-Za-z0-9+_.-]+@[A-Za-z0-9][A-Za-z0-9.-]*[A-Za-z0-9]\\.[A-Za-z]{2,}$"
             )
             emailPattern.matcher(email).matches()
         }
@@ -87,7 +88,7 @@ abstract class BaseViewModel<T : Any>(
      */
     protected open fun validatePassword(password: String): String? {
         return when {
-            password.isEmpty() -> context.getString(R.string.password_required)
+            password.trim().isEmpty() -> context.getString(R.string.password_required)
             password.length < 6 -> context.getString(R.string.password_min_length)
             else -> null
         }
@@ -100,7 +101,7 @@ abstract class BaseViewModel<T : Any>(
      */
     protected fun validatePasswordAdvanced(password: String): String? {
         return when {
-            password.isEmpty() -> context.getString(R.string.password_required)
+            password.trim().isEmpty() -> context.getString(R.string.password_required)
             password.length < 6 -> context.getString(R.string.password_min_length)
             !password.any { it.isUpperCase() } -> context.getString(R.string.password_uppercase_required)
             !password.any { it.isDigit() } -> context.getString(R.string.password_number_required)
@@ -117,7 +118,7 @@ abstract class BaseViewModel<T : Any>(
      */
     protected open fun validateConfirmPassword(confirmPassword: String, originalPassword: String): String? {
         return when {
-            confirmPassword.isEmpty() -> context.getString(R.string.confirm_password_required)
+            confirmPassword.trim().isEmpty() -> context.getString(R.string.confirm_password_required)
             confirmPassword != originalPassword -> context.getString(R.string.passwords_do_not_match)
             else -> null
         }

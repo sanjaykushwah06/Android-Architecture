@@ -22,8 +22,8 @@ sealed class Result<out T> {
     
     fun getOrThrow(): T = when (this) {
         is Success -> data
-        is Error -> throw IllegalStateException(message ?: "Error occurred")
-        is Loading -> throw IllegalStateException("Result is still loading")
+        is Error -> error(message ?: "Error occurred")
+        is Loading -> error("Result is still loading")
     }
     
     fun onSuccess(action: (T) -> Unit): Result<T> {

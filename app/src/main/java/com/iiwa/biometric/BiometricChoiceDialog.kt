@@ -41,7 +41,7 @@ fun BiometricChoiceDialog(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(Dimens._16dp),
+                    .padding(Dimens.dp16),
                 elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface
@@ -50,7 +50,7 @@ fun BiometricChoiceDialog(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(Dimens._24dp),
+                        .padding(Dimens.dp24),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     // Title
@@ -62,7 +62,7 @@ fun BiometricChoiceDialog(
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     
-                    Spacer(modifier = Modifier.height(Dimens._8dp))
+                    Spacer(modifier = Modifier.height(Dimens.dp8))
                     
                     Text(
                         text = "Select your preferred biometric authentication method",
@@ -71,11 +71,11 @@ fun BiometricChoiceDialog(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     
-                    Spacer(modifier = Modifier.height(Dimens._24dp))
+                    Spacer(modifier = Modifier.height(Dimens.dp24))
                     
                     // Authentication Options
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(Dimens._12dp)
+                        verticalArrangement = Arrangement.spacedBy(Dimens.dp12)
                     ) {
                         // Face Authentication Option
                         if (availableBiometricTypes.contains("face")) {
@@ -114,7 +114,7 @@ fun BiometricChoiceDialog(
                         }
                     }
                     
-                    Spacer(modifier = Modifier.height(Dimens._16dp))
+                    Spacer(modifier = Modifier.height(Dimens.dp16))
                     
                     // Cancel Button
                     TextButton(
@@ -150,12 +150,12 @@ private fun BiometricOptionCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(Dimens._16dp),
+                .padding(Dimens.dp16),
             verticalAlignment = Alignment.CenterVertically
         ) {
             icon()
             
-            Spacer(modifier = Modifier.width(Dimens._16dp))
+            Spacer(modifier = Modifier.width(Dimens.dp16))
             
             Column(
                 modifier = Modifier.weight(1f)

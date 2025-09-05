@@ -46,6 +46,7 @@ class ApiConfigViewModel @Inject constructor(
             apiConfig.switchEnvironment(environment)
             loadCurrentConfiguration()
         } catch (e: IllegalArgumentException) {
+            android.util.Log.w("ApiConfigViewModel", "Invalid environment: $environment", e)
             // Handle invalid environment
         }
     }

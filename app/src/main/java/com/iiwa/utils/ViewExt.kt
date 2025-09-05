@@ -88,11 +88,11 @@ fun View.setupSnackbar(
 
 fun View.showToast(
     lifecycleOwner: LifecycleOwner,
-    ToastEvent: LiveData<SingleEvent<Any>>,
+    toastEvent: LiveData<SingleEvent<Any>>,
     timeLength: Int
 ) {
 
-    ToastEvent.observe(lifecycleOwner, Observer { event ->
+    toastEvent.observe(lifecycleOwner, Observer { event ->
         event.getContentIfNotHandled()?.let {
             when (it) {
                 is String -> Toast.makeText(this.context, it, timeLength).show()
@@ -115,9 +115,13 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
             afterTextChanged.invoke(editable.toString())
         }
 
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            // No action needed
+        }
 
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            // No action needed
+        }
     })
 }
 

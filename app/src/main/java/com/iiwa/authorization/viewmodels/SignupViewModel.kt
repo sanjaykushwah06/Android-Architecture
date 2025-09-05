@@ -19,7 +19,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignupViewModel @Inject constructor(@ApplicationContext context: Context) : com.iiwa.viewmodels.BaseViewModel<SignupUiState>(context) {
+class SignupViewModel @Inject constructor(
+    @ApplicationContext context: Context
+) : com.iiwa.viewmodels.BaseViewModel<SignupUiState>(context) {
 
     private val _uiState = MutableStateFlow(SignupUiState())
     override val uiState: StateFlow<SignupUiState> = _uiState.asStateFlow()
@@ -82,7 +84,12 @@ class SignupViewModel @Inject constructor(@ApplicationContext context: Context) 
                         errorMessage = context.getString(R.string.please_fill_all_fields)
                     )
                 }
-            } catch (e: Exception) {
+            } catch (e: IllegalStateException) {
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    errorMessage = context.getString(R.string.signup_failed, e.message ?: "")
+                )
+            } catch (e: SecurityException) {
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
                     errorMessage = context.getString(R.string.signup_failed, e.message ?: "")

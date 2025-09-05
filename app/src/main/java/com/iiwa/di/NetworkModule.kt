@@ -7,6 +7,7 @@
 package com.iiwa.di
 
 import android.content.Context
+import com.iiwa.authorization.repository.UserRepository
 import com.iiwa.data.api.ApiConfig
 import com.iiwa.data.api.ApiService
 import com.iiwa.data.api.AuthApi
@@ -15,7 +16,6 @@ import com.iiwa.data.local.AppDatabase
 import com.iiwa.data.local.TokenStorage
 import com.iiwa.data.local.UserDao
 import com.iiwa.data.remote.RemoteData
-import com.iiwa.authorization.repository.UserRepository
 import com.iiwa.utils.Network
 import com.iiwa.utils.NetworkConnectivity
 import com.iiwa.utils.NetworkUtils

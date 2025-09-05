@@ -8,17 +8,17 @@ import androidx.compose.ui.unit.dp
  * purpose - Dimension constants for consistent spacing and sizing
  */
 object Dimens {
-    val _0dp = 0.dp
-    val _2dp = 2.dp
-    val _4dp = 4.dp
-    val _8dp = 8.dp
-    val _12dp = 12.dp
-    val _16dp = 16.dp
-    val _20dp = 20.dp
-    val _24dp = 24.dp
-    val _32dp = 32.dp
-    val _48dp = 48.dp
-    val _56dp = 56.dp
-    val _64dp = 64.dp
-    val _80dp = 80.dp
+    val dp0 = 0.dp
+    val dp2 = 2.dp
+    val dp4 = 4.dp
+    val dp8 = 8.dp
+    val dp12 = 12.dp
+    val dp16 = 16.dp
+    val dp20 = 20.dp
+    val dp24 = 24.dp
+    val dp32 = 32.dp
+    val dp48 = 48.dp
+    val dp56 = 56.dp
+    val dp64 = 64.dp
+    val dp80 = 80.dp
 }

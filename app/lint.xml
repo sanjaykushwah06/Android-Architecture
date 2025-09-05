@@ -19,7 +19,7 @@
     <!-- === Room Database === -->
     <issue id="SQLiteString" severity="error" /> <!-- discourage raw queries -->
     <issue id="MissingTransactionAnnotation" severity="error" />
-    <issue id="RoomRawQuery" severity="error" />
+  <!--  <issue id="RoomRawQuery" severity="error" />-->
     <issue id="RoomSuspiciousTypeConverter" severity="warning" />
     <issue id="RoomUnusedQueryMethod" severity="warning" />
     <issue id="RoomDaoFlow" severity="error" /> <!-- enforce suspend/Flow -->

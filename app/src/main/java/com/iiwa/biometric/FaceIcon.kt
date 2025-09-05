@@ -81,7 +81,7 @@ private fun DrawScope.drawFaceIcon(color: Color) {
         val mouthWidth = size.width * 0.2f
         
         moveTo(centerX - mouthWidth, mouthCenterY)
-        quadraticBezierTo(
+        quadraticTo(
             centerX, mouthCenterY + size.height * 0.08f,
             centerX + mouthWidth, mouthCenterY
         )

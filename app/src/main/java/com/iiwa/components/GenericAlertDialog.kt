@@ -43,17 +43,14 @@ fun GenericAlertDialog(
     confirmButtonAction: (() -> Unit)? = null,
     dismissButtonText: String? = null,
     dismissButtonAction: (() -> Unit)? = null,
-    additionalButtonText: String? = null,
-    additionalButtonAction: (() -> Unit)? = null,
     confirmButtonStyle: AlertButtonStyle = AlertButtonStyle.PRIMARY,
     dismissButtonStyle: AlertButtonStyle = AlertButtonStyle.TEXT,
-    additionalButtonStyle: AlertButtonStyle = AlertButtonStyle.TEXT,
     isDismissible: Boolean = true,
     content: @Composable (() -> Unit)? = null
 ) {
     if (showDialog) {
         AlertDialog(
-            onDismissRequest = (if (isDismissible) onDismiss else { }) as () -> Unit,
+            onDismissRequest = (if (isDismissible) onDismiss else { onDismiss }) as () -> Unit,
             icon = icon?.let {
                 {
                     Icon(
@@ -76,7 +73,7 @@ fun GenericAlertDialog(
             text = {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(Dimens._8dp),
+                    verticalArrangement = Arrangement.spacedBy(Dimens.dp8),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     // Default message
@@ -110,7 +107,7 @@ fun GenericAlertDialog(
                     )
                 }
             } else null,
-            modifier = Modifier.padding(Dimens._16dp)
+            modifier = Modifier.padding(Dimens.dp16)
         )
         
         // Additional button (for 3-button dialogs like NetworkAlertDialog)

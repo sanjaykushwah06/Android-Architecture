@@ -6,8 +6,6 @@
 
 package com.iiwa.authorization.screens
 
-import android.content.Intent
-import android.provider.Settings
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,11 +14,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
@@ -30,10 +26,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -64,7 +58,7 @@ fun ForgotPasswordScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(Dimens._24dp),
+            .padding(Dimens.dp24),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Header with back button
@@ -74,22 +68,22 @@ fun ForgotPasswordScreen(
         ) {
             IconButton(
                 onClick = onNavigateBack,
-                modifier = Modifier.size(Dimens._48dp)
+                modifier = Modifier.size(Dimens.dp48)
             ) {
                 Icon(
-                    Icons.Default.ArrowBack,
+                    Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    modifier = Modifier.size(Dimens._24dp)
+                    modifier = Modifier.size(Dimens.dp24)
                 )
             }
 
             Spacer(modifier = Modifier.weight(1f))
         }
 
-        Spacer(modifier = Modifier.height(Dimens._32dp))
+        Spacer(modifier = Modifier.height(Dimens.dp32))
 
         // Form State
-        ForgotPasswordForm(
+        forgotPasswordForm(
             uiState = uiState,
             onEmailChange = { viewModel.updateEmail(it) },
             onSubmit = { viewModel.submitForgotPassword() }
@@ -110,15 +104,15 @@ fun ForgotPasswordScreen(
         onRetry = { viewModel.retrySubmit() },
         onSettings = {
             // Open device settings
-            val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
             // Note: In a real app, you'd need to handle this properly
+            // val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
             viewModel.hideNetworkDialog()
         }
     )
 }
 
 @Composable
-private fun ForgotPasswordForm(
+private fun forgotPasswordForm(
     uiState: ForgotPasswordUiState,
     onEmailChange: (String) -> Unit,
     onSubmit: () -> Unit
@@ -131,11 +125,11 @@ private fun ForgotPasswordForm(
         Icon(
             Icons.Default.Lock,
             contentDescription = "Forgot Password",
-            modifier = Modifier.size(Dimens._80dp),
+            modifier = Modifier.size(Dimens.dp80),
             tint = MaterialTheme.colorScheme.primary
         )
 
-        Spacer(modifier = Modifier.height(Dimens._24dp))
+        Spacer(modifier = Modifier.height(Dimens.dp24))
 
         // Title
         Text(
@@ -146,7 +140,7 @@ private fun ForgotPasswordForm(
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(Dimens._16dp))
+        Spacer(modifier = Modifier.height(Dimens.dp16))
 
         // Subtitle
         Text(
@@ -157,7 +151,7 @@ private fun ForgotPasswordForm(
             lineHeight = 24.sp
         )
 
-        Spacer(modifier = Modifier.height(Dimens._48dp))
+        Spacer(modifier = Modifier.height(Dimens.dp48))
 
         // Email Field
         OutlinedTextField(
@@ -186,7 +180,7 @@ private fun ForgotPasswordForm(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(Dimens._32dp))
+        Spacer(modifier = Modifier.height(Dimens.dp32))
 
         // Error Message
         if (uiState.errorMessage != null) {
@@ -199,11 +193,11 @@ private fun ForgotPasswordForm(
                 Text(
                     text = uiState.errorMessage!!,
                     color = MaterialTheme.colorScheme.onErrorContainer,
-                    modifier = Modifier.padding(Dimens._16dp),
+                    modifier = Modifier.padding(Dimens.dp16),
                     textAlign = TextAlign.Center
                 )
             }
-            Spacer(modifier = Modifier.height(Dimens._16dp))
+            Spacer(modifier = Modifier.height(Dimens.dp16))
         }
 
         // Submit Button
@@ -212,11 +206,11 @@ private fun ForgotPasswordForm(
             enabled = !uiState.isLoading && uiState.email.isNotEmpty() && uiState.emailError == null,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(Dimens._56dp)
+                .height(Dimens.dp56)
         ) {
             if (uiState.isLoading) {
                 CircularProgressIndicator(
-                    modifier = Modifier.size(Dimens._24dp),
+                    modifier = Modifier.size(Dimens.dp24),
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             } else {

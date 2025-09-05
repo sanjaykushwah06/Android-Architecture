@@ -146,7 +146,7 @@ private fun BiometricContent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(Dimens._32dp),
+            .padding(Dimens.dp32),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Dynamic Biometric Icon with Animation
@@ -156,7 +156,7 @@ private fun BiometricContent(
             selectedBiometricType = selectedBiometricType
         )
 
-        Spacer(modifier = Modifier.height(Dimens._24dp))
+        Spacer(modifier = Modifier.height(Dimens.dp24))
 
         // Dynamic Title based on selected biometric type
         val titleText = when (authState) {
@@ -188,7 +188,7 @@ private fun BiometricContent(
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(Dimens._16dp))
+        Spacer(modifier = Modifier.height(Dimens.dp16))
 
         // Message
         Text(
@@ -205,7 +205,7 @@ private fun BiometricContent(
             lineHeight = 20.sp
         )
 
-        Spacer(modifier = Modifier.height(Dimens._32dp))
+        Spacer(modifier = Modifier.height(Dimens.dp32))
 
         // Action Buttons
         Row(
@@ -231,7 +231,7 @@ private fun BiometricContent(
             }
         }
 
-        Spacer(modifier = Modifier.height(Dimens._16dp))
+        Spacer(modifier = Modifier.height(Dimens.dp16))
     }
 }
 
@@ -305,7 +305,8 @@ private fun AnimatedBiometricIcon(
                     else -> {
                         // Auto mode - show based on available types
                         when {
-                            availableBiometricTypes.contains("face") && availableBiometricTypes.contains("fingerprint") -> {
+                            availableBiometricTypes.contains("face") && 
+                            availableBiometricTypes.contains("fingerprint") -> {
                                 // Show both icons side by side
                                 Row(
                                     horizontalArrangement = Arrangement.spacedBy(8.dp),
